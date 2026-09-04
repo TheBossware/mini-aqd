@@ -11,6 +11,7 @@ public class Reports {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "report_number", length = 50, nullable = false, unique = true)
     private String reportNumber;
 
@@ -25,6 +26,30 @@ public class Reports {
 
     @Column(name = "report_time", nullable = false)
     private LocalDateTime reportTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reporter_id", nullable = false)
+    private User reporter;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_investigator_id")
+    private User assignedInvestigator;
+
+    public User getAssignedInvestigator() {
+        return assignedInvestigator;
+    }
+
+    public void setAssignedInvestigator(User assignedInvestigator) {
+        this.assignedInvestigator = assignedInvestigator;
+    }
+
+    public User getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(User reporter) {
+        this.reporter = reporter;
+    }
 
     public Long getId() {
         return id;
