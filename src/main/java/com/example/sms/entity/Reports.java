@@ -31,18 +31,6 @@ public class Reports {
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_investigator_id")
-    private User assignedInvestigator;
-
-    public User getAssignedInvestigator() {
-        return assignedInvestigator;
-    }
-
-    public void setAssignedInvestigator(User assignedInvestigator) {
-        this.assignedInvestigator = assignedInvestigator;
-    }
-
     public User getReporter() {
         return reporter;
     }
