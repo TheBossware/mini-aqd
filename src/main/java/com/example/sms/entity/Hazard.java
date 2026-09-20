@@ -26,7 +26,9 @@ public class Hazard {
     @Column(name = "entered_by", nullable = false, length = 100)
     private String enteredBy;
 
-    @Column(name = "sta")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private HazardCategory status;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
