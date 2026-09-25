@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Users
+    </title>
+</head>
+<body>
+     <h1>Users</h1>
+     <table>
+         <thead> <tr>
+             <th>Employee Number</th>
+             <th>User Name</th>
+             <th>Email</th>
+             <th>Company</th>
+             <th>Department</th>
+             <th>Role</th>
+             <th>Is Active</th>
+             <th>Created At</th>
+         </tr>
+         </thead>
+         <tbody id = "userTableBody">
+
+         </tbody>
+     </table>
+<script>
+    async function loadUsers() {
+        const response = await fetch("http://localhost:8080/api/user");
+        const users = await response.json();
+        console.log(users);
+        users.forEach(function(user){
+            const row = `<tr>
+                <td>${user.employeeId}</td>
+                <td>${user.fullName}</td>
+                <td>${user.email}</td>
+                <td>${user.company}</td>
+                <td>${user.department}</td>
+                <td>${user.role}</td>
+                <td>${user.active}</td>
+        <td>${user.createdAt}</td>
+    </tr>`;
+
+    document.getElementById("userTableBody").innerHTML += row;
+            }
+        )
+    }
+    loadUsers();
+
+</script>
+</body>
+
+</html>

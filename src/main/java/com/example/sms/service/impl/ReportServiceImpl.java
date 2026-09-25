@@ -47,7 +47,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ReportResponse> getAllReports()
+    public List<ReportResponse> getAllReports()   // her bir elemanı tek tek toResponsetan geçirmek lazım
     {
        return reportRepository.findAll().stream().map(reportMapper::toResponse).toList();
     }

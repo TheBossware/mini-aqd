@@ -1,7 +1,11 @@
 package com.example.sms.controller;
 
+import com.example.sms.dto.user.UserCreateRequest;
+import com.example.sms.dto.user.UserResponse;
+import com.example.sms.dto.user.UserUpdateRequest;
 import com.example.sms.entity.User;
 import com.example.sms.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +22,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public User addUser(@RequestBody User user){
-        return userService.addUser(user);
+    public UserResponse addUser(@RequestBody UserCreateRequest request){
+        return userService.addUser(request);
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<UserResponse> getAll() {
         return userService.getAll();
     }
+
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id){
+    public UserResponse getById(@PathVariable Long id){
         return userService.getById(id);
     }
 
@@ -43,17 +49,17 @@ public class UserController {
     }
 
     @PutMapping("/{id}")  //user already exists in url above
-    public User updateUser(@PathVariable Long id, @RequestBody User user){
+    public UserResponse updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest user){
         return userService.updateUser(id,user);
     }
 
     @GetMapping("/employee/{employeeId}")
-    public User findByEmployeeId(@PathVariable String employeeId){
+    public UserResponse findByEmployeeId(@PathVariable String employeeId){
         return userService.findByEmployeeId(employeeId);
     }
 
     @GetMapping("/search")
-    public List<User> searchByName(@RequestParam String fullName){
+    public List<UserResponse> searchByName(@RequestParam String fullName){
         return userService.searchByName(fullName);
     }
 
