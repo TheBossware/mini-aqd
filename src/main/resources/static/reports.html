@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+</head>
+<body>
+     <h1>Reports</h1>
+
+     <table>
+         <thead>
+             <tr>
+                 <th>Report Number</th>
+                 <th>Title</th>
+                 <th>Description</th>
+                 <th>Occurrence Date</th>
+                 <th>Report Time</th>
+                 <th>Reporter</th>
+             </tr>
+         </thead>
+
+         <tbody
+              id = "reportsTableBody">
+         </tbody>
+     </table>
+
+<script>
+    async function loadReports() {
+        const response = await fetch("http://localhost:8080/api/reports");
+        const reports = await response.json();
+        console.log(reports);
+        reports.forEach(function(report){
+           const row =  `<tr>
+           <td>${report.reportNumber}</td>
+           <td>${report.title}</td>
+           <td>${report.description}</td>
+           <td>${report.occurrenceDate}</td>
+           <td>${report.reportTime}</td>
+           <td>${report.reporterName}</td>
+           </tr>`;
+
+           document.getElementById("reportsTableBody").innerHTML += row;
+
+        } )
+    }
+
+    loadReports();
+
+
+</script>
+</body>
+</html>
