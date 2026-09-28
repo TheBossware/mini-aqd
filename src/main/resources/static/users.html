@@ -33,6 +33,8 @@
          <input type="text" id="role" placeholder="Role">
          <button type="submit">Add User</button>
      </form>
+
+     <p id="message" style="color: darkred"></p>
 <script>
     async function loadUsers() {
         const response = await fetch("http://localhost:8080/api/user");
@@ -57,14 +59,14 @@
     }
 
     async function addUser(event){
-        event.preventDefault();
+        if(event)  event.preventDefault();
         const employeeId = document.getElementById("employeeId").value;
         const fullName = document.getElementById("fullName").value;
         const email = document.getElementById("email").value;
         const company = document.getElementById("company").value;
         const department = document.getElementById("department").value;
         const role = document.getElementById("role").value;
-        await fetch("http://localhost:8080/api/user", {
+        const response =  await fetch("http://localhost:8080/api/user", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({employeeId: employeeId,
@@ -74,8 +76,14 @@
             role: role,
             company: company})
         });
-
-        loadUsers();
+        if(!response.ok){
+            document.getElementById("message").textContent ="Could not add user.";
+            return;
+        }
+        else{
+            document.getElementById("message").textContent = "";
+            loadUsers();
+        }
     }
     loadUsers();
     document.getElementById("userForm").addEventListener("submit", addUser);
