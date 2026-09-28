@@ -37,7 +37,7 @@ public class ReportServiceImpl implements ReportService {
         User reporter = userRepository.findById(request.reporterId()) .orElseThrow(() -> new RuntimeException("User not found: " + request.reporterId()));
         Reports report = reportMapper.toEntity(request, reporter);
         report.setReportTime(LocalDateTime.now());
-        String uniqueCode = UUID.randomUUID().toString();
+        String uniqueCode = UUID.randomUUID().toString().substring(0,8).toUpperCase();
         report.setReportNumber(uniqueCode);
 
         Reports savedReport = reportRepository.save(report);

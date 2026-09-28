@@ -23,11 +23,22 @@
          </tbody>
      </table>
 
+     <form id = "reportForm">
+        <input type="text" id="title" placeholder="Title">
+         <input type="text" id="description" placeholder="Description">
+         <input type="datetime-local" id="occurrenceDate">
+         <select id="reporterId">
+
+         </select>
+         <button type="submit"> Add Report</button>
+     </form>
+
 <script>
     async function loadReports() {
         const response = await fetch("http://localhost:8080/api/reports");
         const reports = await response.json();
         console.log(reports);
+        document.getElementById("reportsTableBody").innerHTML = "";
         reports.forEach(function(report){
            const row =  `<tr>
            <td>${report.reportNumber}</td>
@@ -42,8 +53,39 @@
 
         } )
     }
+    async function loadReporters() {
+        const response = await fetch("http://localhost:8080/api/user");
+        const reporters = await response.json();
+        console.log(reporters);
+        reporters.forEach(function(reporter){
+            const option= `<option value="${reporter.id}">${reporter.fullName}</option>`;
+                document.getElementById("reporterId").innerHTML += option;
+        });
+    }
+
+    async function addReports(event) {
+        event.preventDefault();
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const occurrenceDate = document.getElementById("occurrenceDate").value;
+        const reporterId = document.getElementById("reporterId").value;
+        await fetch("http://localhost:8080/api/reports", {
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                occurrenceDate: occurrenceDate,
+                reporterId: reporterId
+            })
+        });
+        loadReports();
+
+    }
 
     loadReports();
+    loadReporters();
+    document.getElementById("reportForm").addEventListener("submit", addReports)
 
 
 </script>
